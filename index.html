@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matherätsel: Entschlüssle das Passwort</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .alphabet {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+        .alphabet span {
+            background-color: #add8e6;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .options {
+            margin: 20px auto;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .options button:hover {
+            background-color: #005fa3;
+        }
+        #message {
+            margin: 20px auto;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        #timer {
+            margin: 10px auto;
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Matherätsel: Entschlüssle das Passwort</h1>
+        <h2>Aufgabe: Verschlüssele das Wort <strong>EULER</strong> zu <strong>KHWKD</strong></h2>
+        <p>Max hat ein 5x6-Tastaturfeld verwendet, um das Wort zu verschlüsseln:</p>
+        <div class="alphabet">
+            <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span>
+            <span>F</span><span>G</span><span>H</span><span>I</span><span>J</span>
+            <span>K</span><span>L</span><span>M</span><span>N</span><span>O</span>
+            <span>P</span><span>Q</span><span>R</span><span>S</span><span>T</span>
+            <span>U</span><span>V</span><span>W</span><span>X</span><span>Y</span>
+            <span>Z</span>
+        </div>
+        <div id="message"></div>
+        <div id="timer"></div>
+        <div class="options">
+            <button onclick="checkAnswer('A')">A) oben, rechts, rechts, unten, links</button>
+            <button onclick="checkAnswer('B')">B) unten, links, oben, rechts, unten</button>
+            <button onclick="checkAnswer('C')">C) unten, rechts, rechts, unten, links</button>
+            <button onclick="checkAnswer('D')">D) links, oben, rechts, rechts, unten</button>
+        </div>
+    </div>
+    <script>
+        let correctAnswer = "C";
+        let timer = 0;
+        let penalty = 30;
+
+        function checkAnswer(answer) {
+            const message = document.getElementById("message");
+            const timerDisplay = document.getElementById("timer");
+
+            if (timer > 0) {
+                message.textContent = "Bitte warte, bevor du erneut antwortest!";
+                return;
+            }
+
+            if (answer === correctAnswer) {
+                message.textContent = "Das ist die richtige Antwort. Die Zahl die ihr braucht ist 4.";
+                timerDisplay.textContent = "";
+            } else {
+                timer += penalty;
+                penalty += 30; // Erhöhe die Strafe bei wiederholten Fehlern
+                message.textContent = "Das ist falsch! Versuche es erneut.";
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            const timerDisplay = document.getElementById("timer");
+            const interval = setInterval(() => {
+                if (timer > 0) {
+                    timerDisplay.textContent = `Wartezeit: ${timer} Sekunden`;
+                    timer--;
+                } else {
+                    clearInterval(interval);
+                    timerDisplay.textContent = "";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
+
